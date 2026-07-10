@@ -1782,9 +1782,15 @@ export default function App() {
                   ))}
 
                   {/* Ocean text markings */}
-                  <text x="40" y="270" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[10px] font-black italic opacity-50 font-mono">대서양 (ATLANTIC OCEAN)</text>
-                  <text x="650" y="440" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[10px] font-black italic opacity-50 font-mono">인도양 (INDIAN OCEAN)</text>
-                  <text x="310" y="315" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[9px] font-extrabold italic opacity-60 font-mono">지중해 (MEDITERRANEAN SEA)</text>
+                  <text x="366" y="304" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[10px] font-black italic opacity-50 font-mono" textAnchor="middle">북대서양 (NORTH ATLANTIC OCEAN)</text>
+                  <text x="408" y="412" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[10px] font-black italic opacity-50 font-mono" textAnchor="middle">남대서양 (SOUTH ATLANTIC OCEAN)</text>
+                  <text x="114" y="304" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[10px] font-black italic opacity-50 font-mono" textAnchor="middle">북태평양 (NORTH PACIFIC OCEAN)</text>
+                  <text x="177" y="412" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[10px] font-black italic opacity-50 font-mono" textAnchor="middle">남태평양 (SOUTH PACIFIC OCEAN)</text>
+                  <text x="764" y="327" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[10px] font-black italic opacity-50 font-mono" textAnchor="middle">북태평양 (NORTH PACIFIC OCEAN)</text>
+                  <text x="617" y="412" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[10px] font-black italic opacity-50 font-mono" textAnchor="middle">인도양 (INDIAN OCEAN)</text>
+                  <text x="450" y="77" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[10px] font-black italic opacity-50 font-mono" textAnchor="middle">북극해 (ARCTIC OCEAN)</text>
+                  <text x="450" y="528" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[10px] font-black italic opacity-50 font-mono" textAnchor="middle">남극해 (SOUTHERN OCEAN)</text>
+                  <text x="481" y="291" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[9px] font-extrabold italic opacity-60 font-mono" textAnchor="middle">지중해 (MEDITERRANEAN SEA)</text>
 
                   {/* Selected Country Active Focus Coordinates Target Reticle HUD */}
                   <g className="transition-all duration-300">
