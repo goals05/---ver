@@ -60,195 +60,7 @@ const getCoordinateRange = (coordStr: string): string => {
   return coordStr;
 };
 
-const getEasyRegion = (region: string): { easyTitle: string; description: string } => {
-  const mapping: Record<string, { easyTitle: string; description: string }> = {
-    "북서아프리카 마그레브 산악지대": {
-      easyTitle: "아프리카 북서쪽 산맥 지대",
-      description: "'마그레브'는 아랍어로 '해가 지는 서쪽 땅'을 뜻해요. 바다 옆에 높고 험한 아틀라스 산맥이 솟아 있는 멋진 곳이랍니다."
-    },
-    "북동아프리카 나일강 사막 문명권": {
-      easyTitle: "나일강 주변의 사막 지대",
-      description: "세계에서 가장 긴 나일강 덕분에 주변에 비옥한 땅이 생겼어요. 하지만 강을 조금만 벗어나면 엄청나게 넓고 건조한 사하라 사막이 펼쳐져요."
-    },
-    "남서아프리카 대서양 연안 사구 및 중앙고원 사막": {
-      easyTitle: "바닷가 모래언덕과 높은 사막 지대",
-      description: "'사구'는 바람에 실려 쌓인 '모래언덕'이에요. 바다 바로 옆에 거대한 모래 언덕과 높은 고원의 사막이 함께 있는 신기한 곳이에요."
-    },
-    "남부아프리카 고원 및 연안 지대": {
-      easyTitle: "높은 평원과 바닷가 지대",
-      description: "가운데는 높고 평평한 땅(고원)으로 되어 있고, 바다와 만나는 주변은 깎아지른 듯한 가파른 절벽으로 이루어진 독특한 땅이에요."
-    },
-    "북아프리카 마그레브 해안림 및 중앙 사하라 사막지대": {
-      easyTitle: "바닷가 숲과 넓은 사하라 사막",
-      description: "바다 근처는 따뜻하고 나무가 자라지만, 안쪽으로 들어가면 세계에서 가장 크고 더운 모래 사막인 사하라 사막이 펼쳐집니다."
-    },
-    "서아프리카 기니만 충적 델타지대": {
-      easyTitle: "서쪽 바닷가 넓은 강 하류 평야",
-      description: "'충적 델타'는 강물이 실어 나른 비옥한 흙과 모래가 강 하류 바닷가에 쌓여서 만들어진 넓고 풍요로운 삼각주 평야를 말해요."
-    },
-    "동아프리카 대고원 산악 내륙권": {
-      easyTitle: "동쪽의 높은 평원과 큰 산 지대",
-      description: "바다에서 먼 내륙에 있는 아주 높고 넓은 평원이에요. 아프리카에서 가장 높은 킬리만자로산 같은 거대한 화산들이 솟아 있어요."
-    },
-    "동아프리카 연안 사바나 야생권": {
-      easyTitle: "동쪽 바닷가와 넓은 풀밭 지대",
-      description: "'사바나'는 건기가 있어서 키 작은 나무들과 긴 풀들이 자라는 넓은 초원이에요. 얼룩말과 사자 같은 야생 동물이 아주 많이 살아요."
-    },
-    "동아프리카 고원 및 지구대권": {
-      easyTitle: "높은 평원과 갈라진 큰 골짜기",
-      description: "'지구대'는 땅속의 거대한 힘 때문에 땅이 양옆으로 갈라지면서 생긴 깊고 긴 골짜기예요. 주변에 깊고 아름다운 호수들이 많답니다."
-    },
-    "북서유럽 그레이트브리튼 제도": {
-      easyTitle: "북서쪽의 큰 섬나라 지대",
-      description: "'제도'는 무리지어 있는 여러 섬들을 뜻해요. 영국과 아일랜드가 위치한 푸르고 온화한 섬들로 이루어진 지형이에요."
-    },
-    "중앙유럽 남고북저 지형권": {
-      easyTitle: "남쪽은 높은 산, 북쪽은 평평한 지형",
-      description: "'남고북저'는 '남쪽은 높고 북쪽은 낮다'는 뜻이에요. 남쪽에는 높은 알프스 산맥이 있고 북쪽에는 넓고 평평한 평야가 펼쳐져 있어요."
-    },
-    "남서유럽 이베리아 고원 지대": {
-      easyTitle: "남서쪽의 넓고 높은 평원 지대",
-      description: "스페인과 포르투갈이 있는 반도로, 대부분의 땅이 주변 바다보다 훨씬 높은 해발고도를 가진 거대한 고원과 산맥으로 이루어져 있어요."
-    },
-    "남동유럽 발칸반도 산악·군도지대": {
-      easyTitle: "남동쪽의 산과 섬이 많은 지대",
-      description: "'군도'는 무리지어 모여 있는 많은 섬들이예요. 울퉁불퉁한 산맥들이 바다 깊숙이 잠겨 그리스처럼 수많은 섬과 복잡한 해안선이 되었어요."
-    },
-    "중앙유럽 알프스 산악 내륙지대": {
-      easyTitle: "유럽의 지붕 알프스 산맥 지대",
-      description: "바다가 없는 내륙 한가운데에 위치해 있어요. 일 년 내외 얼음이 얼어있는 높은 알프스 산맥과 에메랄드빛 계곡이 가득한 웅장한 지형이에요."
-    },
-    "북대서양 판과 판이 벌어지는 지열 화산도": {
-      easyTitle: "지각이 갈라지며 생긴 불과 얼음의 섬",
-      description: "지구 표면을 이루는 단단한 판들이 서로 양쪽으로 벌어지는 곳이에요. 틈새로 마그마가 솟아올라 화산과 온천이 펄펄 끓는 섬이랍니다."
-    },
-    "북유럽 스칸디나비아 빙하지대": {
-      easyTitle: "얼음 빙하가 깎아 만든 절벽과 골짜기",
-      description: "옛날 추운 빙하기 시절에 엄청나게 거대한 얼음덩어리(빙하)가 땅을 누르고 깎으며 흘러가서 깊은 U자형 골짜기와 절벽 바닷길을 만들었어요."
-    },
-    "북유럽 스칸디나비아 침엽수 평원지대": {
-      easyTitle: "뾰족뾰족 소나무 가득한 숲속 평원",
-      description: "잎이 뾰족하고 추위에 강한 소나무와 전나무 같은 침엽수림(타이가)이 끝없이 펼쳐진, 평평하고 눈이 많이 내리는 북쪽 나라들의 지형이에요."
-    },
-    "남유럽 아펜니노 반도 및 지중해역": {
-      easyTitle: "장화 모양 반도와 따뜻한 지중해 바닷가",
-      description: "이탈리아 반도를 척추처럼 길게 가로지르는 아펜니노 산맥이 있고, 일 년 내내 따뜻한 햇살이 비치는 지중해 바다로 둘러싸인 아름다운 곳이에요."
-    },
-    "인도양 고립 독립 거대 섬 생태계": {
-      easyTitle: "인도양 속 나홀로 외딴 거대 섬",
-      description: "다른 대륙들과 아주 아주 오랫동안 떨어져 지냈기 때문에, 마다가스카르처럼 지구상 다른 어디에서도 볼 수 없는 희귀한 동물과 식물들이 가득해요."
-    },
-    "서유럽 대륙 평야 및 분지 지대": {
-      easyTitle: "서쪽의 넓은 평야와 사발 모양 땅",
-      description: "'분지'는 주변이 산으로 둘러싸여 한가운데가 사발처럼 오목하고 평평하게 들어간 땅이에요. 농사짓기에 최고로 좋은 넓고 기름진 땅이 많아요."
-    },
-    "사헬 사막 전이대 및 나일강 대합류 분지": {
-      easyTitle: "사막 옆 건조한 풀밭과 큰 강들이 만나는 평지",
-      description: "'사헬'은 사하라 사막의 남쪽 테두리로, 비가 적게 와서 사막으로 변해가는 건조한 풀밭 지대예요. 여러 큰 강들이 합쳐져 평지를 이루고 있어요."
-    },
-    "동유럽 대평원 및 발트해 연안 지대": {
-      easyTitle: "동쪽의 끝없는 평야와 잔잔한 바닷가",
-      description: "끝없이 아주 멀리까지 다 평평한 넓은 평야(대평원)가 이어지는 곳이에요. 북쪽에는 육지에 둘러싸여 파도가 잔잔한 발트해 바다가 있답니다."
-    },
-    "동아시아 반도 지대": {
-      easyTitle: "대륙과 바다를 잇는 징검다리 반도",
-      description: "아시아 대륙에서 튀어나와 3면이 바다로 둘러싸여 있으며, 산맥과 강이 뚜렷한 사계절을 만들어내는 곳이에요."
-    },
-    "동남아시아 인도차이나 반도 지대": {
-      easyTitle: "덥고 습한 남쪽 바다의 거대한 반도",
-      description: "비가 아주 많이 오는 열대 지역으로, 메콩강 같은 거대한 강들이 기름진 평야와 아름다운 밀림을 만들어요."
-    },
-    "동남아시아 적도 열도 지대": {
-      easyTitle: "적도 위에 흩어진 수많은 화산섬들",
-      description: "가장 뜨거운 적도 선에 수만 개의 섬들이 모여 있고, 화산이 많아 밀림과 바다가 어우러진 다이나믹한 곳이에요."
-    },
-    "서아시아 아라비아 사막 지대": {
-      easyTitle: "서쪽의 끝없는 붉은 모래 사막",
-      description: "비가 거의 오지 않아 뜨거운 사막이 끝없이 펼쳐지지만, 땅속 깊은 곳에는 검은 황금이라 불리는 석유가 가득해요."
-    },
-    "서아시아 이란 고원 지대": {
-      easyTitle: "건조하고 험준한 산맥 속 높은 평원",
-      description: "주변이 거대한 산맥들로 둘러싸여 아주 높고 건조한 땅으로, 옛날 실크로드 상인들이 낙타를 타고 지나던 길목이에요."
-    },
-    "중앙아시아 대초원 지대": {
-      easyTitle: "바다 없는 한가운데 끝없는 풀밭",
-      description: "바다에서 아주 멀어 건조하며, 지평선 끝까지 나무 없이 풀만 무성하게 자라는 스텝(초원)이 바다처럼 펼쳐져 있어요."
-    },
-    "동아시아 내륙 초원 지대": {
-      easyTitle: "거친 바람이 부는 높고 차가운 초원",
-      description: "아주 높고 추운 고원지대로 넓은 고비 사막과 끝없는 초원이 있어 옛날부터 사람들이 말을 타고 유목 생활을 했어요."
-    },
-    "동아시아 화산 군도 지대": {
-      easyTitle: "화산섬들이 모여 있는 동쪽 바다 지대",
-      description: "바다 아래에서 솟아오른 험준한 화산들이 뭉쳐 수많은 섬을 이루었어요. 땅속 깊은 곳이 뜨거워 온천과 지진이 많은 지형입니다."
-    },
-    "동아시아 대륙 및 티베트 고원 지대": {
-      easyTitle: "동쪽의 넓은 땅과 세상에서 가장 높은 고원",
-      description: "서쪽에는 구름 위에 떠 있는 것처럼 높은 '세계의 지붕' 티베트 고원이 있고, 동쪽으로는 큰 강이 흐르는 끝없는 평야가 펼쳐집니다."
-    },
-    "남아시아 힌두스탄 반도 및 히말라야 산록": {
-      easyTitle: "남쪽 반도와 히말라야 산맥 밑자락",
-      description: "북쪽은 만년설로 뒤덮인 엄청나게 높은 히말라야 산맥이 찬 바람을 막아주고, 아래쪽 반도에는 아주 덥고 습한 정글과 평야가 있어요."
-    },
-    "북미 중앙 대평원 및 서부 록키 산맥 지대": {
-      easyTitle: "가운데 넓은 들판과 서쪽 높은 산맥",
-      description: "가운데에는 끝도 없이 넓게 펼쳐진 곡창지대 평원이 있고, 서쪽으로는 로키 산맥이라는 엄청나게 길고 거대한 바위산이 솟아 있습니다."
-    },
-    "북미 남부 멕시코 고원 지대": {
-      easyTitle: "남쪽의 높고 건조한 평원 지대",
-      description: "양쪽으로 산맥이 감싸고 있는 가운데가 높고 평평한 땅이에요. 선인장이 자라는 사막과 고원이 넓게 펼쳐져 있어요."
-    },
-    "중미 화산 지협 및 열대 우림 지대": {
-      easyTitle: "두 대륙을 잇는 좁은 화산 길목",
-      description: "북아메리카와 남아메리카를 연결하는 좁은 땅(지협)이에요. 불을 뿜는 화산과 빽빽한 정글이 가득해요."
-    },
-    "카리브해 산호초 및 화산도 지대": {
-      easyTitle: "따뜻한 바다 위의 예쁜 산호초 섬들",
-      description: "에메랄드빛 바다 위에 산호가 쌓여 만들어진 하얀 모래섬들과 화산이 폭발해 생긴 섬들이 모여 있어요."
-    },
-    "북미 스텝 침엽수림 및 로키 북부 빙하지대": {
-      easyTitle: "북쪽 소나무 숲과 꽁꽁 언 빙하 산맥",
-      description: "추위를 견디는 뾰족한 소나무(침엽수)들이 가득한 숲이 끝없이 이어지고, 산 위에는 여름에도 녹지 않는 하얀 빙하가 덮여 있어요."
-    },
-    "남미 아마존 분지 및 브라질 고원 지대": {
-      easyTitle: "남쪽 아마존 열대 우림과 높은 평원",
-      description: "세상에서 가장 넓고 생물이 많은 아마존 열대 우림 정글이 있고, 그 아래쪽으로는 해발 고도가 높은 거대한 브라질 고원이 자리합니다."
-    },
-    "남미 팜파스 평원 및 파타고니아 건조 지대": {
-      easyTitle: "남쪽 넓은 풀밭과 춥고 마른 황무지",
-      description: "농사 짓기 좋은 평평하고 검은 흙의 '팜파스' 초원이 있고, 남쪽으로 더 내려가면 펭귄이 살 만큼 춥고 메마른 파타고니아가 나옵니다."
-    },
-    "남미 안데스 고산 및 잉카 문명 지대": {
-      easyTitle: "남쪽 거대한 산맥과 옛 잉카 문명",
-      description: "남아메리카 서쪽을 따라 세상에서 가장 긴 안데스 산맥이 뻗어 있고, 그 높고 차가운 산속에 신비로운 고대 도시들이 숨겨져 있어요."
-    },
-    "남미 북부 카리브해 연안 및 오리노코 분지": {
-      easyTitle: "남쪽 대륙 위쪽 바다와 넓은 강",
-      description: "남아메리카 위쪽에서 카리브해 바다와 만나고, 오리노코 강 주변으로 엄청나게 넓은 초원과 세계에서 가장 높은 폭포가 있어요."
-    },
-    "오세아니아 대륙 사막 및 대산호초 지대": {
-      easyTitle: "남반구 대륙 사막과 바닷속 산호초",
-      description: "땅 한가운데는 비가 오지 않는 붉은 모래사막(아웃백)이 넓게 퍼져 있고, 바다에는 수천 킬로미터나 이어지는 거대한 산호초 숲이 있어요."
-    },
-    "남서태평양 화산열도 및 알프스 빙하지대": {
-      easyTitle: "태평양 남쪽 화산 섬들과 빙하 산맥",
-      description: "북쪽 섬에서는 뜨거운 화산과 온천이 끓어오르고, 남쪽 섬에서는 얼음 빙하가 만든 깊은 산맥(서던 알프스)이 멋진 풍경을 만듭니다."
-    },
-    "멜라네시아 열대 우림 및 산호초 지대": {
-      easyTitle: "열대 바다의 짙은 숲과 산호섬",
-      description: "적도 남쪽 태평양에 위치해 있으며, 크고 작은 섬들이 화산과 짙은 열대 우림, 아름다운 산호초로 덮여 있습니다."
-    },
-    "폴리네시아 및 미크로네시아 화산도와 환초 지대": {
-      easyTitle: "태평양 한가운데 작은 화산섬과 둥근 산호섬",
-      description: "끝없이 넓은 태평양 바다 위에 점을 찍은 듯 수많은 섬들이 흩어져 있고, 화산이 굳은 섬이나 둥근 띠 모양의 산호초(환초)로 이루어져 있어요."
-    }
-  };
 
-  return mapping[region] || {
-    easyTitle: region,
-    description: "초등학교 지리 과정에서 만나는 아름답고 독특한 자연환경을 보여주는 지형입니다."
-  };
-};
 
 const getLandmarkImageUrl = (countryId: string, index: number): string => {
   const images: Record<string, string[]> = {
@@ -648,99 +460,11 @@ const getLandmarkImageUrl = (countryId: string, index: number): string => {
 };
 
 const getFlagImageUrl = (countryId: string): string => {
-  const mapping: Record<string, string> = {
-    // 유럽
-    'uk': 'gb',
-    'france': 'fr',
-    'germany': 'de',
-    'italy': 'it',
-    'spain': 'es',
-    'greece': 'gr',
-    'norway': 'no',
-    'switzerland': 'ch',
-    'finland': 'fi',
-    'iceland': 'is',
-    'czech': 'cz',
-    'slovakia': 'sk',
-    'netherlands': 'nl',
-    'belgium': 'be',
-    'poland': 'pl',
-    'hungary': 'hu',
-    'ukraine': 'ua',
-    'bulgaria': 'bg',
-    'croatia': 'hr',
-    'austria': 'at',
-    
-    // 아프리카
-    'egypt': 'eg',
-    'algeria': 'dz',
-    'sudan': 'sd',
-    'nigeria': 'ng',
-    'namibia': 'na',
-    'south-africa': 'za',
-    'kenya': 'ke',
-    'morocco': 'ma',
-    'madagascar': 'mg',
-    'ethiopia': 'et',
-    'tanzania': 'tz',
-    'tunisia': 'tn',
-    'libya': 'ly',
-    'south-sudan': 'ss',
-    'somalia': 'so',
-    
-    // 아시아
-    'japan': 'jp',
-    'china': 'cn',
-    'india': 'in',
-    'southkorea': 'kr',
-    'vietnam': 'vn',
-    'thailand': 'th',
-    'indonesia': 'id',
-    'philippines': 'ph',
-    'saudiarabia': 'sa',
-    'uae': 'ae',
-    'iran': 'ir',
-    'kazakhstan': 'kz',
-    'mongolia': 'mn',
-    
-    // 북아메리카
-    'usa': 'us',
-    'canada': 'ca',
-    'mexico': 'mx',
-    'cuba': 'cu',
-    'jamaica': 'jm',
-    'guatemala': 'gt',
-    'costarica': 'cr',
-    'panama': 'pa',
-    'bahamas': 'bs',
-    'dominican': 'do',
-    
-    // 남아메리카
-    'brazil': 'br',
-    'argentina': 'ar',
-    'chile': 'cl',
-    'peru': 'pe',
-    'colombia': 'co',
-    'venezuela': 've',
-    'ecuador': 'ec',
-    'bolivia': 'bo',
-    'uruguay': 'uy',
-    'paraguay': 'py',
-    
-    // 오세아니아
-    'australia': 'au',
-    'newzealand': 'nz',
-    'papuanewguinea': 'pg',
-    'fiji': 'fj',
-    'samoa': 'ws',
-    'tonga': 'to',
-    'vanuatu': 'vu',
-    'solomonislands': 'sb',
-    'micronesia': 'fm',
-    'palau': 'pw'
-  };
-  const code = mapping[countryId] || 'un';
-  return `https://flagcdn.com/w80/${code}.png`;
+  const country = countriesData.find(c => c.id === countryId);
+  if (country && country.isoCode) {
+    return `https://flagcdn.com/w80/${country.isoCode}.png`;
+  }
+  return '';
 };
 
 export default function App() {
@@ -762,6 +486,9 @@ export default function App() {
 
   const [viewMode, setViewMode] = useState<'home' | 'map'>('home');
   const [selectedCountry, setSelectedCountry] = useState<Country>(countriesData[0]);
+  const [hoveredCountryId, setHoveredCountryId] = useState<string | null>(null);
+  const [showLabels, setShowLabels] = useState<'auto' | 'always' | 'hidden'>('auto');
+  const [showAssociativeSearch, setShowAssociativeSearch] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeContinent, setActiveContinent] = useState<'전체' | '유럽' | '아시아' | '북아메리카' | '남아메리카' | '아프리카' | '오세아니아'>('전체');
 
@@ -1040,7 +767,7 @@ export default function App() {
               <span className="text-slate-800 font-black">지리 사전</span>
             </h1>
             <p className="text-sm text-slate-500 mt-2 font-semibold">
-              유럽 & 아프리카 국가들의 경위도 좌표계, 지형적 비밀, 기후를 탐색하는 인터랙티브 지형 학습 백과사전
+              전 세계 국가들의 경위도 좌표계, 지형적 비밀, 기후를 탐색하는 인터랙티브 지형 학습 백과사전
             </p>
           </div>
 
@@ -1137,7 +864,7 @@ export default function App() {
                     <div className="p-6 text-center text-slate-400 text-xs font-bold">
                       일치하는 국가를 찾지 못했습니다. 국어명을 정확히 써보세요! 🌍
                     </div>
-                  )}
+              )}
                 </div>
               </div>
             )}
@@ -1340,7 +1067,7 @@ export default function App() {
                     setShowMapSuggestions(true);
                   }}
                   onFocus={() => setShowMapSuggestions(true)}
-                  placeholder="다른 유럽 & 아프리카 국가를 검색해보세요..."
+                  placeholder="전 세계 국가를 검색해보세요..."
                   className="w-full pl-9 pr-10 py-1.5 bg-slate-50 border border-slate-200 rounded-full text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 transition-all placeholder:text-slate-400"
                 />
                 {searchQuery && (
@@ -1482,12 +1209,12 @@ export default function App() {
                         <div className="text-right">
                           <span className="font-extrabold text-slate-800 text-xs block">{selectedCountry.geographicRegion}</span>
                           <span className="text-[9.5px] text-blue-600 font-black bg-blue-50/70 border border-blue-100 px-1.5 py-0.5 rounded-md inline-block mt-1">
-                            🌱 초등 6학년 쉬운 설명: {getEasyRegion(selectedCountry.geographicRegion).easyTitle}
+                            🌱 쉬운 설명 : {selectedCountry.geoFeatures}
                           </span>
                         </div>
                       </div>
                       <p className="text-[10.5px] text-slate-600 bg-slate-50 border border-slate-100 p-2.5 rounded-lg leading-relaxed font-semibold">
-                        💡 <span className="text-blue-700 font-bold">도움말:</span> {getEasyRegion(selectedCountry.geographicRegion).description}
+                        💡 <span className="text-blue-700 font-bold">도움말:</span> {selectedCountry.naturalEnvironment}
                       </p>
                     </div>
                     <div className="h-px bg-slate-100" />
@@ -1714,10 +1441,10 @@ export default function App() {
                     <div className="bg-blue-50/40 border border-blue-100/50 p-2.5 rounded-xl text-[10px] leading-relaxed">
                       <div className="font-extrabold text-blue-900 flex items-center gap-1 mb-1">
                         <span>🌱</span>
-                        <span>초등 6학년 쉬운 지형: {getEasyRegion(selectedCountry.geographicRegion).easyTitle}</span>
+                        <span>쉬운 설명 : {selectedCountry.geoFeatures}</span>
                       </div>
                       <p className="text-slate-600 font-semibold">
-                        {getEasyRegion(selectedCountry.geographicRegion).description}
+                        {selectedCountry.naturalEnvironment}
                       </p>
                     </div>
 
@@ -1840,12 +1567,46 @@ export default function App() {
                   <Minus className="w-4 h-4" />
                 </button>
                 <div className="h-px bg-slate-100 mx-1" />
+
                 <button
                   onClick={handleZoomReset}
                   className="w-8 h-8 rounded-xl hover:bg-slate-100 text-slate-700 flex items-center justify-center transition-all cursor-pointer font-bold border border-transparent hover:border-slate-200"
                   title="지도 초기화"
                 >
                   <RefreshCw className="w-3.5 h-3.5 animate-spin-slow" />
+                </button>
+                <div className="h-px bg-slate-100 mx-1" />
+                <button
+                  onClick={() => setShowLabels(prev => prev === 'auto' ? 'always' : prev === 'always' ? 'hidden' : 'auto')}
+                  className="w-8 h-8 rounded-xl hover:bg-slate-100 text-slate-700 flex items-center justify-center transition-all cursor-pointer font-bold border border-transparent hover:border-slate-200 relative"
+                  title="라벨 표시 설정 (자동 / 항상 표시 / 숨김)"
+                >
+                  <div className="relative">
+                    <Globe className="w-4 h-4" />
+                    {showLabels === 'hidden' && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-5 h-px bg-red-500 rotate-45 transform origin-center shadow-sm" />
+                      </div>
+                    )}
+                    {showLabels === 'auto' && (
+                      <div className="absolute -bottom-1 -right-1 text-[8px] font-black text-blue-600 bg-white rounded-full px-0.5 pointer-events-none">A</div>
+                    )}
+                  </div>
+                </button>
+                <div className="h-px bg-slate-100 mx-1" />
+                <button
+                  onClick={() => setShowAssociativeSearch(prev => !prev)}
+                  className="w-8 h-8 rounded-xl hover:bg-slate-100 text-slate-700 flex items-center justify-center transition-all cursor-pointer font-bold border border-transparent hover:border-slate-200 relative"
+                  title="연관 검색어 사이드바 토글"
+                >
+                  <div className="relative">
+                    <MapPin className="w-4 h-4" />
+                    {!showAssociativeSearch && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-5 h-px bg-red-500 rotate-45 transform origin-center shadow-sm" />
+                      </div>
+                    )}
+                  </div>
                 </button>
               </div>
 
@@ -1889,13 +1650,14 @@ export default function App() {
                     </div>
                     <div className="h-px bg-slate-200 my-1" />
                     <p className="text-slate-400 italic text-[9px] leading-normal">경도를 가르는 자오선과 위도선을 마킹했습니다.</p>
+                    <p className="text-slate-400 italic text-[9px] leading-normal mt-0.5">💡 두 손가락(또는 마우스 휠)으로 지도를 줌인/줌아웃 할 수 있습니다.</p>
                   </div>
                 )}
 
                 {/* SVG Map Canvas */}
                 <svg
                   viewBox={`0 0 ${mapWidth} ${mapHeight}`}
-                  className="w-full h-full select-none cursor-grab active:cursor-grabbing"
+                  className="w-full h-full select-none cursor-grab active:cursor-grabbing touch-none"
                   onMouseDown={handleMouseDown}
                   onMouseMove={handleMouseMove}
                   onMouseUp={handleMouseUp}
@@ -2024,7 +1786,7 @@ export default function App() {
                   <text x="650" y="440" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[10px] font-black italic opacity-50 font-mono">인도양 (INDIAN OCEAN)</text>
                   <text x="310" y="315" fill={mapTheme === 'satellite' ? '#475569' : '#0284c7'} className="text-[9px] font-extrabold italic opacity-60 font-mono">지중해 (MEDITERRANEAN SEA)</text>
 
-                  {/* Selected Country Active Focus Coordinates Crosshairs & Target Reticle HUD */}
+                  {/* Selected Country Active Focus Coordinates Target Reticle HUD */}
                   <g className="transition-all duration-300">
                     {/* Concentric rings at focal coordinate */}
                     <circle
@@ -2036,29 +1798,6 @@ export default function App() {
                       strokeWidth="1"
                       strokeDasharray="1,2"
                       className="opacity-40"
-                    />
-                    
-                    {/* Horizontal crosshair */}
-                    <line 
-                      x1="0" 
-                      y1={getProjectedCoords(selectedCountry)[1]} 
-                      x2="754" 
-                      y2={getProjectedCoords(selectedCountry)[1]} 
-                      stroke="#4f46e5" 
-                      strokeWidth="1.5" 
-                      strokeDasharray="4,4" 
-                      className="opacity-50"
-                    />
-                    {/* Vertical crosshair */}
-                    <line 
-                      x1={getProjectedCoords(selectedCountry)[0]} 
-                      y1="10" 
-                      x2={getProjectedCoords(selectedCountry)[0]} 
-                      y2="540" 
-                      stroke="#4f46e5" 
-                      strokeWidth="1.5" 
-                      strokeDasharray="4,4" 
-                      className="opacity-50"
                     />
 
                     {/* Floating HUD reticle badge over the focal point showing coordinates */}
@@ -2084,29 +1823,6 @@ export default function App() {
                     </g>
                   </g>
 
-                  {/* Draw connection lines to neighbors */}
-                  {countriesData.map((c) => {
-                    return c.surroundingCountries.map(neighName => {
-                      const neigh = countriesData.find(n => n.name === neighName);
-                      if (neigh && neigh.id > c.id) {
-                        return (
-                          <line
-                            key={`${c.id}-${neigh.id}`}
-                            x1={getProjectedCoords(c)[0]}
-                            y1={getProjectedCoords(c)[1]}
-                            x2={getProjectedCoords(neigh)[0]}
-                            y2={getProjectedCoords(neigh)[1]}
-                            stroke={mapTheme === 'satellite' ? '#4338ca' : '#94a3b8'}
-                            strokeWidth="1.5"
-                            strokeDasharray="3,3"
-                            className="opacity-45"
-                          />
-                        );
-                      }
-                      return null;
-                    });
-                  })}
-
                   {/* Draw Nodes (Markers) for countries with National flags clearly showing */}
                   {countriesData.map((country) => {
                     const isSelected = selectedCountry?.id === country.id;
@@ -2119,6 +1835,8 @@ export default function App() {
                       <g
                         key={country.id}
                         className="cursor-pointer"
+                        onMouseEnter={() => setHoveredCountryId(country.id)}
+                        onMouseLeave={() => setHoveredCountryId(null)}
                         onClick={(e) => {
                           if (dragged) {
                             e.stopPropagation();
@@ -2159,7 +1877,8 @@ export default function App() {
                         />
 
                         {/* Text Label on Map with National Flag - EXPANDED and high fidelity */}
-                        <g transform={`translate(${cx}, ${cy - 14})`}>
+                        {(showLabels === 'always' || (showLabels === 'auto' && (isSelected || hoveredCountryId === country.id || scale >= 2.0))) && (
+                        <g transform={`translate(${cx}, ${cy - 14})`} className="pointer-events-none">
                           <rect
                             x="-38"
                             y="-9"
@@ -2188,6 +1907,7 @@ export default function App() {
                             {country.name}
                           </text>
                         </g>
+                        )}
                       </g>
                     );
                   })}
@@ -2201,40 +1921,44 @@ export default function App() {
               </div>
 
               {/* Associative Search Sidebar - Floating at the Bottom of Map viewport */}
-              <div className="absolute bottom-4 right-4 z-10 bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-2xl text-white max-w-sm hidden md:block">
-                <span className="text-[9px] text-blue-400 font-extrabold uppercase tracking-widest block mb-1">인접 지리 연관 검색어</span>
-                <p className="text-xs text-slate-300 mb-3 font-semibold">이웃나라 국기를 누르면 지도가 즉시 포커스 이동해요.</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {selectedCountry.surroundingCountries.map(neighName => {
-                    const matchedCountry = countriesData.find(c => c.name === neighName);
-                    return (
-                      <button
-                        key={neighName}
-                        onClick={() => matchedCountry && selectCountryDirect(matchedCountry)}
-                        disabled={!matchedCountry}
-                        className={`text-[10px] px-2.5 py-1.5 rounded-full border transition-all flex items-center gap-1 ${
-                          matchedCountry 
-                            ? 'bg-slate-800 border-slate-700 hover:border-blue-400 hover:bg-slate-700 text-white cursor-pointer' 
-                            : 'bg-slate-900 border-slate-800 text-slate-600 cursor-not-allowed'
-                        }`}
-                      >
-                        {matchedCountry ? (
-                          <img src={getFlagImageUrl(matchedCountry.id)} alt={matchedCountry.name} className="w-4 h-3 object-contain rounded-xs border border-slate-700" />
-                        ) : '🌐'}
-                        <span>{neighName}</span>
-                      </button>
-                    );
-                  })}
+              {showAssociativeSearch && (
+                <div className="absolute bottom-4 right-4 z-10 bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-2xl text-white max-w-sm hidden md:block">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-[9px] text-blue-400 font-extrabold uppercase tracking-widest block">인접 지리 연관 검색어</span>
+                    <button onClick={() => setShowAssociativeSearch(false)} className="text-slate-500 hover:text-white transition-colors cursor-pointer p-0.5 rounded">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                  </div>
+                  <p className="text-xs text-slate-300 mb-3 font-semibold">이웃나라 국기를 누르면 지도가 즉시 포커스 이동해요.</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedCountry.surroundingCountries.map(neighName => {
+                      const matchedCountry = countriesData.find(c => c.name === neighName);
+                      return (
+                        <button
+                          key={neighName}
+                          onClick={() => matchedCountry && selectCountryDirect(matchedCountry)}
+                          disabled={!matchedCountry}
+                          className={`text-[10px] px-2.5 py-1.5 rounded-full border transition-all flex items-center gap-1 ${
+                            matchedCountry 
+                              ? 'bg-slate-800 border-slate-700 hover:border-blue-400 hover:bg-slate-700 text-white cursor-pointer' 
+                              : 'bg-slate-900 border-slate-800 text-slate-600 cursor-not-allowed'
+                          }`}
+                        >
+                          {matchedCountry ? (
+                            <img src={getFlagImageUrl(matchedCountry.id)} alt={matchedCountry.name} className="w-4 h-3 object-contain rounded-xs border border-slate-700" />
+                          ) : '🌐'}
+                          <span>{neighName}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-
+              )}
             </div>
-
           </div>
-
         </div>
       )}
-
+      
       {/* FOOTER */}
       <footer className="bg-slate-900 text-slate-400 text-xs py-6 mt-auto border-t border-slate-800 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center space-y-1.5">
