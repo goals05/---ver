@@ -256,7 +256,7 @@ export const countriesData: Country[] = [
       "알바니아",
       "북마케도니아",
       "불가리아",
-      "터키"
+      "튀르키예"
     ],
     "mapCoords": {
       "x": 450,
@@ -746,7 +746,7 @@ export const countriesData: Country[] = [
     "surroundingCountries": [
       "북마케도니아",
       "그리스",
-      "터키"
+      "튀르키예"
     ],
     "mapCoords": {
       "x": 460,
@@ -3375,12 +3375,12 @@ export const countriesData: Country[] = [
   },
   {
     "id": "tr",
-    "name": "터키",
+    "name": "튀르키예",
     "englishName": "Turkey",
     "continent": "아시아",
     "capital": "앙카라",
     "population": "약 8,500만 명",
-    "language": "터키어",
+    "language": "튀르키예어",
     "flag": "🏳️",
     "climate": "지중해성 및 대륙성 기후",
     "climateDesc": "해안 지대는 온화한 지중해성 기후를 보이지만, 내륙의 아나톨리아 고원은 일교차가 크고 겨울에 매우 추운 대륙성 기후를 나타냅니다.",
